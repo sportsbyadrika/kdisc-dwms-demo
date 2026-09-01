@@ -1,0 +1,48 @@
+---
+# ---------------------------------------------------------------------------
+# cPanel Git Version Control deployment.
+#
+# Repository : /home/shooting/repositories/kdisc-dwms-demo
+# Deployed to: /home/shooting/public_html/dwms.kdiscmis.org.in
+#
+# In cPanel: Git Version Control -> Manage -> Pull or Deploy -> Update from
+# Remote, then Deploy HEAD Commit. Tasks below run from the repository root.
+#
+# Files that hold secrets or user data are never overwritten:
+#   .env      is copied only when it does not already exist (cp -n)
+#   uploads/  is only added to, never cleared
+# ---------------------------------------------------------------------------
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/shooting/public_html/dwms.kdiscmis.org.in
+
+    # --- directory skeleton ------------------------------------------------
+    - /bin/mkdir -p $DEPLOYPATH/app $DEPLOYPATH/assets $DEPLOYPATH/database
+    - /bin/mkdir -p $DEPLOYPATH/uploads/photos $DEPLOYPATH/uploads/documents
+    - /bin/mkdir -p $DEPLOYPATH/uploads/resumes $DEPLOYPATH/uploads/slides
+    - /bin/mkdir -p $DEPLOYPATH/uploads/logos
+
+    # --- application -------------------------------------------------------
+    # "app/." rather than "app" so the contents are copied, dotfiles included.
+    - /bin/cp -f index.php $DEPLOYPATH/index.php
+    - /bin/cp -f .htaccess $DEPLOYPATH/.htaccess
+    - /bin/cp -f .env.example $DEPLOYPATH/.env.example
+    - /bin/cp -Rf app/. $DEPLOYPATH/app/
+    - /bin/cp -Rf assets/. $DEPLOYPATH/assets/
+    - /bin/cp -Rf database/. $DEPLOYPATH/database/
+    - /bin/cp -f uploads/.htaccess $DEPLOYPATH/uploads/.htaccess
+
+    # --- first deployment only --------------------------------------------
+    # cp -n will not clobber an existing .env, so the live credentials survive
+    # every later deployment. Edit $DEPLOYPATH/.env once, after the first run.
+    - /bin/cp -n .env.example $DEPLOYPATH/.env
+
+    # --- permissions -------------------------------------------------------
+    - /bin/chmod 0644 $DEPLOYPATH/index.php $DEPLOYPATH/.htaccess
+    - /bin/chmod 0600 $DEPLOYPATH/.env
+    - /bin/chmod -R 0755 $DEPLOYPATH/uploads
+    - /bin/chmod -R 0755 $DEPLOYPATH/app $DEPLOYPATH/assets $DEPLOYPATH/database
+
+    # --- confirmation ------------------------------------------------------
+    - /bin/echo "DWMS 2.0 deployed to $DEPLOYPATH"
+    - /bin/echo "If this is the first deployment, edit $DEPLOYPATH/.env then open /setup"

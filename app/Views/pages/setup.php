@@ -32,14 +32,17 @@
           <?= icon('x-circle', 'h-5 w-5 shrink-0') ?><span>Could not connect. <?= e($dbError ?: 'Check your credentials.') ?></span>
         </p>
         <div class="mt-4 rounded-card bg-canvas p-4 text-sm text-ink-soft">
-          <p class="font-semibold text-ink">Fix it in <code>app/config.php</code>:</p>
-          <pre class="mt-2 overflow-x-auto rounded bg-white p-3 text-xs leading-relaxed"><code>'db' =&gt; [
-    'host' =&gt; 'localhost',
-    'name' =&gt; 'your_database',
-    'user' =&gt; 'your_user',
-    'pass' =&gt; 'your_password',
-],</code></pre>
-          <p class="mt-3">On most shared hosts the database is created from cPanel &rarr; MySQL Databases, and the user must be added to the database with all privileges.</p>
+          <p class="font-semibold text-ink">Fix it in <code>.env</code> at the project root:</p>
+          <pre class="mt-2 overflow-x-auto rounded bg-white p-3 text-xs leading-relaxed"><code>DB_HOST=localhost
+DB_NAME=your_database
+DB_USER=your_user
+DB_PASS="your_password"</code></pre>
+          <?php if (!$envExists): ?>
+            <p class="mt-3 font-medium text-danger">No <code>.env</code> file was found. Copy <code>.env.example</code> to <code>.env</code> and fill in the four values above.</p>
+          <?php endif; ?>
+          <p class="mt-3">On cPanel the database is created under <strong>MySQL&reg; Databases</strong>, and both names carry your account prefix
+            (for example <code>shooting_dwms</code> and <code>shooting_dwmsuser</code>). Remember to add the user to the database with
+            <strong>ALL PRIVILEGES</strong>.</p>
         </div>
       <?php endif; ?>
     </div>
@@ -72,6 +75,7 @@
   </div>
 
   <p class="mt-6 text-center text-xs text-ink-faint">
-    After installation, delete or protect this page by removing the <code>/setup</code> routes in <code>app/routes.php</code>.
+    After installation, remove the two <code>/setup</code> routes from <code>app/routes.php</code>,
+    and set <code>APP_DEBUG=false</code> and <code>MAIL_DEMO_OTP=false</code> in <code>.env</code>.
   </p>
 </div>

@@ -2,6 +2,13 @@
 
 use App\Core\Auth;
 use App\Core\Database;
+use App\Core\Env;
+
+/** Read a value from .env (or a real environment variable). */
+function env(string $key, $default = null)
+{
+    return Env::get($key, $default);
+}
 
 function config(?string $key = null, $default = null)
 {

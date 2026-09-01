@@ -1,3 +1,6 @@
+# Secrets — created on the server from .env.example, never committed.
+.env
+.env.local
 app/config.php
 /uploads/*/*
 !/uploads/*/.gitkeep
