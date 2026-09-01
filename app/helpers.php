@@ -192,30 +192,35 @@ function view(string $template, array $data = [], string $layout = 'app'): void
     echo render($template, $data, $layout);
 }
 
-function render(string $template, array $data = [], ?string $layout = 'app'): string
+/**
+ * Render a view, optionally wrapped in a layout.
+ *
+ * Internal variables are underscore-prefixed so that a view variable named
+ * "template", "name" or "data" cannot collide with them during extract().
+ */
+function render(string $_template, array $_data = [], ?string $_layout = 'app'): string
 {
-    $file = dirname(__DIR__) . '/app/Views/' . str_replace('.', '/', $template) . '.php';
-    if (!is_file($file)) {
-        abort(500, 'View not found: ' . $template);
+    $_file = dirname(__DIR__) . '/app/Views/' . str_replace('.', '/', $_template) . '.php';
+    if (!is_file($_file)) {
+        abort(500, 'View not found: ' . $_template);
     }
-    extract($data, EXTR_SKIP);
+    extract($_data, EXTR_SKIP);
     ob_start();
-    require $file;
+    require $_file;
     $content = ob_get_clean();
 
-    if ($layout === null) {
+    if ($_layout === null) {
         return $content;
     }
-    $layoutFile = dirname(__DIR__) . '/app/Views/layouts/' . $layout . '.php';
     ob_start();
-    require $layoutFile;
+    require dirname(__DIR__) . '/app/Views/layouts/' . $_layout . '.php';
     return ob_get_clean();
 }
 
-function partial(string $name, array $data = []): void
+function partial(string $_partial, array $_data = []): void
 {
-    extract($data, EXTR_SKIP);
-    require dirname(__DIR__) . '/app/Views/partials/' . $name . '.php';
+    extract($_data, EXTR_SKIP);
+    require dirname(__DIR__) . '/app/Views/partials/' . $_partial . '.php';
 }
 
 function abort(int $code, string $message = ''): void
@@ -373,6 +378,12 @@ function validate(array $rules, array $data): array
                 $errors[$field] = $label . ' is required.';
                 break;
             }
+            // "accepted" must also fail on an absent value — an unchecked box
+            // submits nothing at all.
+            if ($name === 'accepted' && !in_array((string) $value, ['1', 'on', 'yes', 'true'], true)) {
+                $errors[$field] = $label . ' must be accepted.';
+                break;
+            }
             if ($value === null || $value === '') {
                 continue;
             }
@@ -422,11 +433,6 @@ function validate(array $rules, array $data): array
                         $errors[$field] = $label . ' does not match.';
                     }
                     break;
-                case 'accepted':
-                    if (!in_array((string) $value, ['1', 'on', 'yes', 'true'], true)) {
-                        $errors[$field] = $label . ' must be accepted.';
-                    }
-                    break;
             }
             if (isset($errors[$field])) {
                 break;
@@ -471,4 +477,22 @@ function icon(string $name, string $class = 'h-5 w-5', array $attrs = []): strin
     return '<svg class="' . e($class) . '" viewBox="0 0 24 24" fill="' . $fill . '" stroke="currentColor" '
         . 'stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"'
         . $extra . '>' . $body . '</svg>';
+}
+
+/* -------------------------------------------------------------- activity */
+
+function log_activity(string $actorType, ?int $actorId, string $action, string $description = '', ?string $subject = null, ?int $subjectId = null): void
+{
+    if (!Database::tableExists('activity_log')) {
+        return;
+    }
+    Database::insert('activity_log', [
+        'actor_type'  => $actorType,
+        'actor_id'    => $actorId,
+        'action'      => $action,
+        'subject'     => $subject,
+        'subject_id'  => $subjectId,
+        'description' => mb_substr($description, 0, 255),
+        'ip_address'  => $_SERVER['REMOTE_ADDR'] ?? null,
+    ]);
 }
