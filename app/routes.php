@@ -21,6 +21,22 @@ $router->get('/sitemap',        'PageController@sitemap');
 $router->get('/contact',        'PageController@contact');
 $router->post('/contact',       'PageController@contactSubmit');
 
+/* ---------------------------------------------- public: jobs search */
+$router->get('/jobs',                 'JobController@index');
+$router->get('/jobs/{id}',            'JobController@show');
+$router->post('/jobs/{id}/apply',     'JobController@apply');
+$router->post('/jobs/save/{id}',      'JobController@save');
+
+/* --------------------------------------------- public: skilling */
+$router->get('/skills',               'SkillController@index');
+$router->get('/skills/{id}',          'SkillController@show');
+$router->post('/skills/{id}/enrol',   'SkillController@enrol');
+
+/* --------------------------------------- public: career services */
+$router->get('/career-services',              'CareerServiceController@index');
+$router->get('/career-services/{id}',         'CareerServiceController@show');
+$router->post('/career-services/{id}/request', 'CareerServiceController@request');
+
 /* ------------------------------------------------- job seeker: auth */
 $router->get('/register',           'SeekerAuthController@register');
 $router->post('/register/email',    'SeekerAuthController@sendEmailOtp');

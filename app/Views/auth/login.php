@@ -10,6 +10,9 @@ ob_start();
 
     <form method="post" action="<?= url($action) ?>" class="mt-6 fieldset">
       <?= csrf_field() ?>
+      <?php if (!empty($applyJob)): ?>
+        <input type="hidden" name="wishlist_job_id" value="<?= (int) $applyJob['id'] ?>">
+      <?php endif; ?>
       <div>
         <label class="label" for="l-email">E-mail address</label>
         <input id="l-email" name="email" type="email" required autofocus autocomplete="username"

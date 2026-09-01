@@ -9,8 +9,11 @@
 <title><?= e($title) ?></title>
 <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
 <link rel="stylesheet" href="<?= asset('css/app.css') ?>">
-<script defer src="<?= asset('js/alpine.min.js') ?>"></script>
+<!-- app.js registers the Alpine stores and components, so it must run BEFORE
+     Alpine boots and fires alpine:init. Both are deferred, so they execute in
+     document order. -->
 <script defer src="<?= asset('js/app.js') ?>"></script>
+<script defer src="<?= asset('js/alpine.min.js') ?>"></script>
 </head>
 <body class="min-h-full bg-canvas">
 <?php partial('flash'); ?>

@@ -18,8 +18,11 @@ $bodyClass = $bodyClass ?? '';
 <title><?= e($title) ?></title>
 <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
 <link rel="stylesheet" href="<?= asset('css/app.css') ?>">
-<script defer src="<?= asset('js/alpine.min.js') ?>"></script>
+<!-- app.js registers the Alpine stores and components, so it must run BEFORE
+     Alpine boots and fires alpine:init. Both are deferred, so they execute in
+     document order. -->
 <script defer src="<?= asset('js/app.js') ?>"></script>
+<script defer src="<?= asset('js/alpine.min.js') ?>"></script>
 </head>
 <body class="flex min-h-full flex-col <?= e($bodyClass) ?>">
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-700 focus:shadow-pop">Skip to content</a>

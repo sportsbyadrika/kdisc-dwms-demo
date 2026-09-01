@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 @layer base {
+  /* Alpine hides these once it boots; without this rule they flash first. */
+  [x-cloak] { display: none !important; }
   html { scroll-behavior: smooth; }
   body { @apply bg-canvas text-ink antialiased; }
   h1, h2, h3, h4 { @apply font-semibold tracking-tight; }

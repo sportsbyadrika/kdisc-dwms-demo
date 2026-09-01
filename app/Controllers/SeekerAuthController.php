@@ -169,12 +169,26 @@ class SeekerAuthController
         if (Auth::check('seeker')) {
             redirect('/dashboard');
         }
+        // Arriving from "Apply" on a vacancy: name it so the visitor knows the
+        // job has not been lost.
+        $applyJob = null;
+        if ($jobId = (int) input('job')) {
+            $applyJob = DB::first("SELECT id, title FROM jobs WHERE id = ? AND status = 'published'", [$jobId]);
+            if ($applyJob) {
+                $_SESSION['pending_apply'] = (int) $applyJob['id'];
+            }
+        }
+
         view('auth.login', [
             'pageTitle' => 'Job seeker login',
             'guard'     => 'seeker',
-            'heading'   => 'Sign in to your job seeker account',
-            'sub'       => 'Apply for vacancies, track applications and manage your profile.',
+            'applyJob'  => $applyJob,
+            'heading'   => $applyJob ? 'Sign in to apply' : 'Sign in to your job seeker account',
+            'sub'       => $applyJob
+                ? 'Sign in to apply for ' . $applyJob['title'] . '. We have kept it for you.'
+                : 'Apply for vacancies, track applications and manage your profile.',
             'action'    => '/login',
+            'forgotPath'   => '/forgot-password',
             'registerPath' => '/register',
             'registerLabel' => 'New here? Create a job seeker account',
             'altLinks'  => [
@@ -206,8 +220,10 @@ class SeekerAuthController
         Auth::refresh('seeker', ['photo' => $seeker['photo']]);
         log_activity('seeker', (int) $seeker['id'], 'login', 'Signed in');
 
-        // A job parked by the "apply before signing in" flow.
-        $jobId = (int) input('wishlist_job_id');
+        // A job parked by the "apply before signing in" flow — either posted by
+        // the login modal or stashed in the session by JobController::apply().
+        $jobId = (int) (input('wishlist_job_id') ?: ($_SESSION['pending_apply'] ?? 0));
+        unset($_SESSION['pending_apply']);
         if ($jobId) {
             $exists = DB::value("SELECT id FROM jobs WHERE id = ? AND status = 'published'", [$jobId]);
             if ($exists) {
