@@ -81,3 +81,39 @@ $router->post('/dashboard/resume/{id}/delete',  'SeekerProfileController@resumeD
 $router->post('/dashboard/{section}/save',         'SeekerProfileController@recordSave');
 $router->post('/dashboard/{section}/{id}/delete',  'SeekerProfileController@recordDelete');
 $router->get('/dashboard/{section}',               'SeekerProfileController@records');
+
+/* ---------------------------------------------------- employer: auth */
+$router->get('/employer/register',           'EmployerAuthController@register');
+$router->post('/employer/register/email',    'EmployerAuthController@sendEmailOtp');
+$router->post('/employer/register/verify',   'EmployerAuthController@verifyEmailOtp');
+$router->post('/employer/register/complete', 'EmployerAuthController@complete');
+$router->get('/employer/login',              'EmployerAuthController@loginForm');
+$router->post('/employer/login',             'EmployerAuthController@login');
+
+/* ----------------------------------------------- employer: dashboard */
+$router->get('/employer/dashboard',    'EmployerController@dashboard');
+$router->get('/employer/password',     'EmployerController@passwordForm');
+$router->post('/employer/password',    'EmployerController@passwordUpdate');
+
+/* ------------------------------------------------- employer: profile */
+$router->get('/employer/profile',      'EmployerProfileController@show');
+$router->post('/employer/profile',     'EmployerProfileController@save');
+$router->get('/employer/documents',    'EmployerProfileController@documents');
+$router->post('/employer/documents',   'EmployerProfileController@documentStore');
+$router->post('/employer/documents/{id}/delete', 'EmployerProfileController@documentDelete');
+
+/* -------------------------------------- employer: job curation sheets */
+$router->get('/employer/jobs',                  'EmployerJobController@index');
+$router->get('/employer/jobs/create',           'EmployerJobController@create');
+$router->post('/employer/jobs/create',          'EmployerJobController@store');
+$router->get('/employer/jobs/{id}/edit',        'EmployerJobController@edit');
+$router->post('/employer/jobs/{id}/edit',       'EmployerJobController@update');
+$router->post('/employer/jobs/{id}/publish',    'EmployerJobController@publish');
+$router->post('/employer/jobs/{id}/close',      'EmployerJobController@close');
+$router->post('/employer/jobs/{id}/reopen',     'EmployerJobController@reopen');
+$router->post('/employer/jobs/{id}/delete',     'EmployerJobController@destroy');
+$router->get('/employer/jobs/{id}/applicants',  'EmployerJobController@applicants');
+
+/* -------------------------------------------- employer: applications */
+$router->get('/employer/applications', 'EmployerJobController@allApplications');
+$router->post('/employer/applications/{id}/status', 'EmployerJobController@updateApplication');
