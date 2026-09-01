@@ -1,0 +1,7 @@
+app/config.php
+/uploads/*/*
+!/uploads/*/.gitkeep
+*.log
+.DS_Store
+
+node_modules/
