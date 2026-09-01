@@ -15,7 +15,7 @@ $closes   = $job['last_date'] ? (int) floor((strtotime($job['last_date']) - strt
   'crumbs'  => ['Jobs' => '/jobs', $job['title'] => null],
 ]); ?>
 
-<section class="shell grid gap-6 py-6 lg:grid-cols-[1fr,340px]">
+<section class="shell grid grid-cols-1 gap-6 py-6 lg:grid-cols-[1fr,340px]">
   <div class="min-w-0 space-y-4">
 
     <!-- header card -->
@@ -71,7 +71,7 @@ $closes   = $job['last_date'] ? (int) floor((strtotime($job['last_date']) - strt
           ['Last date to apply', $job['last_date'] ? fdate($job['last_date']) : 'Open until filled', 'calendar'],
         ];
         foreach ($sheet as [$label, $value, $ic]): ?>
-          <div class="flex items-start gap-3 bg-white px-5 py-3.5">
+          <div class="flex min-w-0 items-start gap-3 bg-white px-5 py-3.5">
             <span class="mt-0.5 shrink-0 text-brand-500"><?= icon($ic, 'h-4 w-4') ?></span>
             <div class="min-w-0">
               <dt class="text-xs font-medium uppercase tracking-wide text-ink-faint"><?= e($label) ?></dt>

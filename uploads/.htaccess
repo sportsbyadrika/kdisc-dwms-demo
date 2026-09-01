@@ -1,5 +1,32 @@
-# Never execute anything that is uploaded
-php_flag engine off
-AddType text/plain .php .php3 .php4 .php5 .php7 .phtml .pl .py .cgi .asp .sh
-Options -ExecCGI -Indexes
-RemoveHandler .php .phtml .php3 .php4 .php5 .php7
+# Uploads are user-supplied: never let the server execute anything in here.
+#
+# php_flag only exists under mod_php and raises a 500 under PHP-FPM, so it is
+# guarded. The FilesMatch rule below is the one that actually holds on every
+# SAPI, and store_upload() additionally rejects any extension not whitelisted.
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php5.c>
+    php_flag engine off
+</IfModule>
+
+<FilesMatch "(?i)\.(php|php[0-9]*|phtml|phps|phar|pl|py|cgi|sh|bash|asp|aspx|jsp|htaccess)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Strip any handler the server may have inherited for these extensions.
+RemoveHandler .php .php3 .php4 .php5 .php7 .php8 .phtml .phar .pl .py .cgi
+RemoveType .php .php3 .php4 .php5 .php7 .php8 .phtml .phar
+
+Options -ExecCGI -Indexes -MultiViews
+AddType text/plain .php .phtml .pl .py .cgi .sh

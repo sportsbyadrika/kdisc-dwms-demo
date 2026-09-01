@@ -10,7 +10,7 @@ $points = $points ?? [
 ];
 $tone = $tone ?? 'brand';
 ?>
-<section class="shell grid gap-8 py-8 lg:grid-cols-[1.05fr,0.95fr] lg:py-14">
+<section class="shell grid grid-cols-1 gap-8 py-8 lg:grid-cols-[1.05fr,0.95fr] lg:py-14">
   <div class="order-2 lg:order-1">
     <?= $slot ?>
   </div>

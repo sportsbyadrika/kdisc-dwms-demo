@@ -1,7 +1,7 @@
 <?php
 /** @var array $spec @var array $active @var array $filters @var array $facets @var array $result @var string $sortKey */
 ob_start(); ?>
-<ul class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
   <?php foreach ($result['rows'] as $s): ?>
     <li>
       <article class="flex h-full flex-col rounded-card bg-white p-5 shadow-card transition hover:shadow-pop">

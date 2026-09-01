@@ -1,6 +1,6 @@
 <?php partial('dash-header', ['title' => 'Change password', 'sub' => 'Choose a password you do not use anywhere else.']); ?>
 
-<div class="grid gap-4 lg:grid-cols-[1.3fr,1fr]">
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1.3fr,1fr]">
   <div class="card">
     <div class="card-head"><h2 class="card-title">Update your password</h2></div>
     <form method="post" action="<?= url('/employer/password') ?>" class="card-pad fieldset">

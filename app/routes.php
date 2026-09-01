@@ -117,3 +117,45 @@ $router->get('/employer/jobs/{id}/applicants',  'EmployerJobController@applicant
 /* -------------------------------------------- employer: applications */
 $router->get('/employer/applications', 'EmployerJobController@allApplications');
 $router->post('/employer/applications/{id}/status', 'EmployerJobController@updateApplication');
+
+/* ---------------------------------------------------- officials: auth */
+$router->get('/official/login',   'OfficialAuthController@loginForm');
+$router->post('/official/login',  'OfficialAuthController@login');
+
+/* ----------------------------------------------- officials: dashboard */
+$router->get('/official/dashboard',  'OfficialController@dashboard');
+$router->get('/official/password',   'OfficialController@passwordForm');
+$router->post('/official/password',  'OfficialController@passwordUpdate');
+
+/* ---------------------------------- officials: verification & registry */
+$router->get('/official/employers',            'OfficialController@employers');
+$router->get('/official/employers/{id}',       'OfficialController@employerShow');
+$router->post('/official/employers/{id}/decide', 'OfficialController@employerDecide');
+$router->get('/official/jobs',                 'OfficialController@jobs');
+$router->post('/official/jobs/{id}/moderate',  'OfficialController@jobModerate');
+$router->get('/official/seekers',              'OfficialController@seekers');
+$router->get('/official/seekers/{id}',         'OfficialController@seekerShow');
+$router->post('/official/documents/{id}/verify', 'OfficialController@seekerVerifyDocument');
+$router->get('/official/messages',             'OfficialController@messages');
+$router->post('/official/messages/{id}/read',  'OfficialController@messageRead');
+$router->get('/official/settings',             'OfficialController@settings');
+$router->post('/official/settings',            'OfficialController@settingsSave');
+
+/* ------------------------------- officials: offices, users and roles */
+$router->get('/official/offices',              'OfficialAdminController@offices');
+$router->post('/official/offices',             'OfficialAdminController@officeSave');
+$router->post('/official/offices/{id}/delete', 'OfficialAdminController@officeDelete');
+$router->get('/official/users',                'OfficialAdminController@users');
+$router->post('/official/users',               'OfficialAdminController@userSave');
+$router->post('/official/users/{id}/reset-password', 'OfficialAdminController@userResetPassword');
+$router->post('/official/users/{id}/deactivate',     'OfficialAdminController@userDelete');
+$router->get('/official/roles',                'OfficialAdminController@roles');
+$router->post('/official/roles',               'OfficialAdminController@roleSave');
+$router->post('/official/roles/{id}/delete',   'OfficialAdminController@roleDelete');
+
+/* ------------------------------------------------- officials: content */
+// hero | skills | careers, all driven by App\Core\Content.
+$router->get('/official/{section}',                'OfficialContentController@index');
+$router->post('/official/{section}',               'OfficialContentController@save');
+$router->post('/official/{section}/{id}/status',   'OfficialContentController@status');
+$router->post('/official/{section}/{id}/delete',   'OfficialContentController@delete');

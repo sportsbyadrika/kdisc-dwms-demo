@@ -4,7 +4,7 @@
   'crumbs'  => ['Contact' => null],
 ]); ?>
 
-<section class="shell grid gap-6 py-10 lg:grid-cols-3">
+<section class="shell grid grid-cols-1 gap-6 py-10 lg:grid-cols-3">
   <div class="lg:col-span-2 card">
     <div class="card-head"><h2 class="card-title">Send us a message</h2></div>
     <form method="post" action="<?= url('/contact') ?>" class="card-pad fieldset">

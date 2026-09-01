@@ -5,7 +5,7 @@
  */
 $current = current_path();
 ?>
-<div class="shell grid gap-6 py-6 lg:grid-cols-[260px,1fr] lg:py-8">
+<div class="shell grid grid-cols-1 gap-6 py-6 lg:grid-cols-[260px,1fr] lg:py-8">
 
   <aside class="lg:sticky lg:top-20 lg:self-start" x-data="{ open: false }">
     <!-- identity card -->

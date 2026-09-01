@@ -4,7 +4,7 @@
   'crumbs'  => ['About' => null],
 ]); ?>
 
-<section class="shell grid gap-8 py-10 lg:grid-cols-3">
+<section class="shell grid grid-cols-1 gap-8 py-10 lg:grid-cols-3">
   <div class="lg:col-span-2 space-y-6">
     <div class="card card-pad">
       <h2 class="card-title">What DWMS 2.0 does</h2>
@@ -17,7 +17,7 @@
 
     <div class="card card-pad">
       <h2 class="card-title">Principles we build on</h2>
-      <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+      <ul class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <?php foreach ([
           ['shield-check', 'Verified once, trusted everywhere', 'e-KYC and document verification happen once and are reused across every application.'],
           ['id-card', 'Consent-first data sharing', 'Aadhaar and other identity details are shared with a government department only after explicit, recorded consent.'],

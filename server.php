@@ -15,6 +15,12 @@ if (preg_match('#^/(app|database|node_modules|\.git)(/|$)#', $path)) {
     http_response_code(403);
     exit('Forbidden');
 }
+
+// Mirror the uploads/.htaccess rule: nothing under /uploads is ever executed.
+if (preg_match('#^/uploads/#', $path) && preg_match('#\.(php[0-9]*|phtml|phar|pl|py|cgi|sh)$#i', $path)) {
+    http_response_code(403);
+    exit('Forbidden');
+}
 if ($path !== '/' && is_file($file)) {
     return false; // let the built-in server stream the asset
 }

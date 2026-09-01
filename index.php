@@ -12,8 +12,9 @@ $router = new Router();
 require __DIR__ . '/app/routes.php';
 
 // Guide the operator to the installer while the database is not ready yet.
+// Everything under /setup is exempt, including the installer's own POST.
 $path = current_path();
-if ($path !== '/setup' && (!Database::ok() || !Database::tableExists('settings'))) {
+if (strpos($path, '/setup') !== 0 && (!Database::ok() || !Database::tableExists('settings'))) {
     redirect('/setup');
 }
 

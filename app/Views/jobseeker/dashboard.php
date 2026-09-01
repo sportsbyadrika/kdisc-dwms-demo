@@ -21,7 +21,7 @@ $kycTone = [
 ]); ?>
 
 <!-- identity + verification -->
-<div class="grid gap-4 sm:grid-cols-3">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
   <div class="card card-pad">
     <div class="flex items-start justify-between gap-2">
       <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-500"><?= icon('mail', 'h-4 w-4') ?></span>
@@ -58,7 +58,7 @@ $kycTone = [
 </div>
 
 <!-- counters -->
-<div class="mt-4 grid gap-4 sm:grid-cols-4">
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4">
   <?php foreach ([
     ['Applications', $stats['applications'], 'send', '/dashboard/applications'],
     ['In progress', $stats['shortlisted'], 'target', '/dashboard/applications'],
@@ -75,7 +75,7 @@ $kycTone = [
   <?php endforeach; ?>
 </div>
 
-<div class="mt-4 grid gap-4 lg:grid-cols-3">
+<div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
   <!-- profile completeness -->
   <div class="card lg:col-span-1">
     <div class="card-head"><h2 class="card-title">Complete your profile</h2><span class="badge-blue"><?= (int) $summary['score'] ?>%</span></div>

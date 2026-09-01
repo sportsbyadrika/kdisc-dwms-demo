@@ -1,7 +1,7 @@
 <?php /** @var string $heading @var string $sub @var array $sections @var string $updated */ ?>
 <?php partial('page-hero', ['heading' => $heading, 'sub' => $sub, 'crumbs' => [$heading => null]]); ?>
 
-<section class="shell grid gap-6 py-10 lg:grid-cols-[220px,1fr]">
+<section class="shell grid grid-cols-1 gap-6 py-10 lg:grid-cols-[220px,1fr]">
   <nav class="hidden lg:block" aria-label="On this page">
     <div class="sticky top-20 card card-pad">
       <p class="text-xs font-bold uppercase tracking-wider text-ink-faint">On this page</p>

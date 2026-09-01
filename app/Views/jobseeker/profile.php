@@ -4,7 +4,7 @@
   'sub'   => 'These details appear at the top of your profile when an employer opens your application.',
 ]); ?>
 
-<div class="grid gap-4 lg:grid-cols-[1.5fr,1fr]">
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr,1fr]">
   <div class="card">
     <div class="card-head"><h2 class="card-title">Your details</h2></div>
     <form method="post" action="<?= url('/dashboard/profile') ?>" enctype="multipart/form-data" class="card-pad fieldset">

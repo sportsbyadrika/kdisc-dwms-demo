@@ -4,7 +4,7 @@
   'sub'   => 'Attach scanned copies of your statutory documents — verification is faster with them.',
 ]); ?>
 
-<div class="grid gap-4 lg:grid-cols-[1.4fr,1fr]">
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr,1fr]">
   <div class="space-y-3">
     <?php if ($documents): ?>
       <?php foreach ($documents as $d): ?>

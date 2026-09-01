@@ -11,7 +11,7 @@
 
 <section class="border-b border-line bg-white">
   <div class="shell py-4">
-    <form method="get" action="<?= url($path) ?>" class="grid gap-3 sm:grid-cols-[1fr,auto]">
+    <form method="get" action="<?= url($path) ?>" class="grid grid-cols-1 gap-3 sm:grid-cols-[1fr,auto]">
       <?php foreach ($filters as $k => $v): if ($k === 'q') { continue; }
           foreach ((array) $v as $vv): ?>
         <input type="hidden" name="<?= e($k) ?><?= is_array($v) ? '[]' : '' ?>" value="<?= e($vv) ?>">
@@ -27,7 +27,7 @@
   </div>
 </section>
 
-<section class="shell grid gap-6 py-6 lg:grid-cols-[260px,1fr]">
+<section class="shell grid grid-cols-1 gap-6 py-6 lg:grid-cols-[260px,1fr]">
   <?php partial('filter-panel', ['path' => $path, 'spec' => $spec, 'active' => $active, 'filters' => $filters, 'facets' => $facets]); ?>
 
   <div class="min-w-0">
