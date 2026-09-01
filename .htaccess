@@ -1,34 +1,88 @@
-# DWMS 2.0 - front controller / clean URLs (no file extensions)
+# ---------------------------------------------------------------------------
+# DWMS 2.0 — front controller, clean URLs (no file extensions) and hardening.
+# ---------------------------------------------------------------------------
 Options -Indexes -MultiViews
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
     # If the project lives in a sub folder, set it here e.g. RewriteBase /dwms/
+    # and set APP_BASE_URL=/dwms in .env to match.
     # RewriteBase /
 
-    # Force trailing-slash removal (except the site root)
+    # --- denials first ----------------------------------------------------
+    # These must precede the pass-through rules below: once a rule ends with
+    # [L] the rest are skipped, so anything placed after the front-controller
+    # rule would never be reached.
+
+    # Dotfiles — .env above all. The deployment path is the document root, so
+    # this is what keeps the database password out of a browser.
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+
+    # Application internals.
+    RewriteRule ^(app|database|node_modules)(/|$) - [F,L]
+
+    # Development-only files, in case they are ever uploaded.
+    RewriteRule ^(server|tailwind\.config)\. - [F,L]
+
+    # --- routing ----------------------------------------------------------
+    # Drop a trailing slash (except at the site root).
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.+)/$ /$1 [R=301,L]
 
-    # Never rewrite real files (assets, uploads) or directories
+    # Serve real files and directories (assets, uploads) untouched.
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # Everything else goes to the front controller
+    # Everything else is a route: hand it to the front controller.
     RewriteRule ^ index.php [QSA,L]
 </IfModule>
 
+# --- security headers ------------------------------------------------------
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set X-Permitted-Cross-Domain-Policies "none"
 </IfModule>
 
-# Protect application internals
-<FilesMatch "\.(sql|md|json|lock|log)$">
-    Require all denied
+# --- the same denials again, for hosts without mod_rewrite -----------------
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
+
+<FilesMatch "(?i)\.(env|ya?ml|json|lock|md|sql|log|ini|sh|bak|dist|example|sample)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# --- caching for static assets --------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css               "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/svg+xml          "access plus 30 days"
+    ExpiresByType image/png              "access plus 30 days"
+    ExpiresByType image/jpeg             "access plus 30 days"
+    ExpiresByType image/webp             "access plus 30 days"
+</IfModule>
+
+# --- compression -----------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+    AddOutputFilterByType DEFLATE application/javascript application/json image/svg+xml
+</IfModule>
 
 ErrorDocument 404 /index.php

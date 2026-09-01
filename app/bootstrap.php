@@ -17,6 +17,11 @@ spl_autoload_register(static function (string $class): void {
     }
 });
 
+// Configuration comes from .env at the project root. It is read after the
+// autoloader is registered because the reader is an App\Core class, and before
+// config() is first called.
+\App\Core\Env::load(DWMS_ROOT . '/.env');
+
 date_default_timezone_set(config('app.timezone', 'Asia/Kolkata'));
 
 if (config('app.debug')) {

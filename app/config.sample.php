@@ -1,36 +1,42 @@
 <?php
 /**
  * DWMS 2.0 configuration.
- * Copy this file to app/config.php and fill in your shared-hosting details.
+ *
+ * Every value is read from the .env file at the project root, with a safe
+ * default here — so in normal use you only edit .env and never touch this file.
+ *
+ * If app/config.php exists it is used instead of this file, which is handy for
+ * a host that cannot keep a .env outside version control.
  */
 return [
     'app' => [
-        'name'      => 'DWMS 2.0',
-        'tagline'   => 'Digital Workforce Management System',
-        'base_url'  => '',                 // e.g. '/dwms' when installed in a sub folder, '' at domain root
-        'debug'     => false,
-        'timezone'  => 'Asia/Kolkata',
-        'org'       => 'Kerala Development and Innovation Strategic Council',
-        'org_short' => 'K-DISC',
+        'name'      => env('APP_NAME', 'DWMS 2.0'),
+        'tagline'   => env('APP_TAGLINE', 'Digital Workforce Management System'),
+        // '' at a domain or sub-domain root, '/dwms' when installed in a sub folder.
+        'base_url'  => rtrim((string) env('APP_BASE_URL', ''), '/'),
+        'debug'     => (bool) env('APP_DEBUG', false),
+        'timezone'  => env('APP_TIMEZONE', 'Asia/Kolkata'),
+        'org'       => env('APP_ORG', 'Kerala Development and Innovation Strategic Council'),
+        'org_short' => env('APP_ORG_SHORT', 'K-DISC'),
     ],
     'db' => [
-        'host'     => 'localhost',
-        'port'     => 3306,
-        'name'     => 'dwms',
-        'user'     => 'root',
-        'pass'     => '',
-        'charset'  => 'utf8mb4',
+        'host'    => env('DB_HOST', 'localhost'),
+        'port'    => (int) env('DB_PORT', 3306),
+        'name'    => env('DB_NAME', 'dwms'),
+        'user'    => env('DB_USER', 'root'),
+        'pass'    => (string) env('DB_PASS', ''),
+        'charset' => env('DB_CHARSET', 'utf8mb4'),
     ],
     'mail' => [
-        // MVP uses PHP mail(); OTPs are also written to the verification table.
-        'from'      => 'no-reply@example.com',
-        'from_name' => 'DWMS 2.0',
-        // When true the e-mail / Aadhaar OTP is shown on screen instead of being mailed.
-        'demo_otp'  => true,
+        // The MVP uses PHP's mail(); OTPs are also stored in verification_codes.
+        'from'      => env('MAIL_FROM', 'no-reply@example.com'),
+        'from_name' => env('MAIL_FROM_NAME', 'DWMS 2.0'),
+        // true shows the OTP on screen instead of mailing it. Set to false in production.
+        'demo_otp'  => (bool) env('MAIL_DEMO_OTP', true),
     ],
     'security' => [
-        'session_name'   => 'dwms_session',
-        'session_ttl'    => 7200,
-        'max_upload_mb'  => 5,
+        'session_name'  => env('SESSION_NAME', 'dwms_session'),
+        'session_ttl'   => (int) env('SESSION_TTL', 7200),
+        'max_upload_mb' => (int) env('MAX_UPLOAD_MB', 5),
     ],
 ];

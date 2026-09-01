@@ -12,14 +12,19 @@ class SetupController
 {
     public function index(): void
     {
+        $envExists    = is_file(DWMS_ROOT . '/.env');
         $configExists = is_file(DWMS_ROOT . '/app/config.php');
+        $configured   = $envExists || $configExists;
+        $uploadsOk    = is_writable(DWMS_ROOT . '/uploads');
+
         $checks = [
-            ['PHP 7.4 or newer',        version_compare(PHP_VERSION, '7.4.0', '>='), PHP_VERSION],
-            ['PDO MySQL driver',        extension_loaded('pdo_mysql'), extension_loaded('pdo_mysql') ? 'loaded' : 'missing'],
-            ['mbstring extension',      extension_loaded('mbstring'), extension_loaded('mbstring') ? 'loaded' : 'missing'],
-            ['fileinfo extension',      extension_loaded('fileinfo'), extension_loaded('fileinfo') ? 'loaded' : 'optional but recommended'],
-            ['app/config.php present',  $configExists, $configExists ? 'found' : 'copy app/config.sample.php to app/config.php'],
-            ['uploads/ writable',       is_writable(DWMS_ROOT . '/uploads'), is_writable(DWMS_ROOT . '/uploads') ? 'writable' : 'chmod 755 (or 775) the uploads folder'],
+            ['PHP 7.4 or newer',   version_compare(PHP_VERSION, '7.4.0', '>='), PHP_VERSION],
+            ['PDO MySQL driver',   extension_loaded('pdo_mysql'), extension_loaded('pdo_mysql') ? 'loaded' : 'missing'],
+            ['mbstring extension', extension_loaded('mbstring'), extension_loaded('mbstring') ? 'loaded' : 'missing'],
+            ['fileinfo extension', extension_loaded('fileinfo'), extension_loaded('fileinfo') ? 'loaded' : 'optional but recommended'],
+            ['Configuration file', $configured,
+             $envExists ? '.env found' : ($configExists ? 'app/config.php found' : 'copy .env.example to .env and fill it in')],
+            ['uploads/ writable',  $uploadsOk, $uploadsOk ? 'writable' : 'chmod 755 (or 775) the uploads folder'],
         ];
 
         $dbOk      = DB::ok();
@@ -33,6 +38,7 @@ class SetupController
             'installed' => $installed,
             'dbName'    => config('db.name'),
             'dbHost'    => config('db.host'),
+            'envExists' => $envExists,
         ], 'blank');
     }
 
