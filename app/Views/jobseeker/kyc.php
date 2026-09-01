@@ -36,7 +36,7 @@ $status = $seeker['kyc_status'];
 </div>
 
 <?php if ($status !== 'verified'): ?>
-<div class="mt-4 grid gap-4 lg:grid-cols-[1.4fr,1fr]">
+<div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr,1fr]">
   <div class="card">
     <div class="card-head"><h2 class="card-title">Aadhaar e-KYC</h2><span class="badge-blue">Recommended</span></div>
 
@@ -159,7 +159,7 @@ $status = $seeker['kyc_status'];
 <?php else: ?>
   <div class="mt-4 card card-pad">
     <h2 class="card-title">What verification unlocks</h2>
-    <ul class="mt-3 grid gap-3 sm:grid-cols-2">
+    <ul class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
       <?php foreach ([
         ['briefcase', 'Apply to vacancies that require a verified identity'],
         ['target', 'Appear higher in employer shortlists'],

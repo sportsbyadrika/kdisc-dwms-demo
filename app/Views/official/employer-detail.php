@@ -9,7 +9,7 @@ $tone = ['verified' => 'badge-green', 'pending' => 'badge-amber', 'rejected' => 
   'actions' => '<a href="' . url('/official/employers') . '" class="btn-ghost">' . icon('arrow-left', 'h-4 w-4') . 'Back to list</a>',
 ]); ?>
 
-<div class="grid gap-4 lg:grid-cols-[1fr,320px]">
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr,320px]">
   <div class="space-y-4">
     <div class="card">
       <div class="card-head">

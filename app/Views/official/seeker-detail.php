@@ -11,7 +11,7 @@ $kycTone = ['verified' => 'badge-green', 'pending' => 'badge-amber', 'failed' =>
   'actions' => '<a href="' . url('/official/seekers') . '" class="btn-ghost">' . icon('arrow-left', 'h-4 w-4') . 'Back to registry</a>',
 ]); ?>
 
-<div class="grid gap-4 lg:grid-cols-[1fr,320px]">
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr,320px]">
   <div class="space-y-4">
     <div class="card">
       <div class="card-head"><h2 class="card-title">Identity</h2>

@@ -21,7 +21,7 @@ $maxDistrict = max(1, max(array_map(static fn($d) => (int) $d['n'], $byDistrict 
   </div>
 <?php endif; ?>
 
-<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
   <?php foreach ([
     ['Job seekers', $stats['seekers'], 'users', '/official/seekers'],
     ['e-KYC verified', $stats['verified'], 'shield-check', '/official/seekers?kyc=verified'],
@@ -42,7 +42,7 @@ $maxDistrict = max(1, max(array_map(static fn($d) => (int) $d['n'], $byDistrict 
   <?php endforeach; ?>
 </div>
 
-<div class="mt-4 grid gap-4 lg:grid-cols-3">
+<div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
   <div class="card lg:col-span-2">
     <div class="card-head">
       <h2 class="card-title">Job seeker registrations — last 14 days</h2>
@@ -86,7 +86,7 @@ $maxDistrict = max(1, max(array_map(static fn($d) => (int) $d['n'], $byDistrict 
   </div>
 </div>
 
-<div class="mt-4 grid items-start gap-4 lg:grid-cols-3">
+<div class="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-3">
   <div class="card">
     <div class="card-head"><h2 class="card-title">Live vacancies by district</h2></div>
     <?php if ($byDistrict): ?>

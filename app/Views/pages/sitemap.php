@@ -29,7 +29,7 @@ $map = [
 ];
 ?>
 <?php partial('page-hero', ['heading' => 'Sitemap', 'sub' => 'Every page on DWMS 2.0, in one list.', 'crumbs' => ['Sitemap' => null]]); ?>
-<section class="shell grid gap-5 py-10 sm:grid-cols-2 lg:grid-cols-3">
+<section class="shell grid grid-cols-1 gap-5 py-10 sm:grid-cols-2 lg:grid-cols-3">
   <?php foreach ($map as $group => $links): ?>
     <div class="card card-pad">
       <h2 class="card-title"><?= e($group) ?></h2>

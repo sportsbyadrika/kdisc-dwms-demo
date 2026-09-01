@@ -5,7 +5,7 @@ $s = $service;
 ?>
 <?php partial('page-hero', ['heading' => $s['title'], 'sub' => $s['summary'] ?: '', 'crumbs' => ['Career Services' => '/career-services', $s['title'] => null]]); ?>
 
-<section class="shell grid gap-6 py-6 lg:grid-cols-[1fr,340px]">
+<section class="shell grid grid-cols-1 gap-6 py-6 lg:grid-cols-[1fr,340px]">
   <div class="min-w-0 space-y-4">
     <div class="card card-pad">
       <div class="flex flex-wrap items-start gap-4">
@@ -41,7 +41,7 @@ $s = $service;
           ['Venue', $s['venue'], 'map-pin'],
           ['District', $s['district'], 'map-pin'],
         ], static fn($r) => $r[1] !== null && $r[1] !== '') as [$label, $value, $ic]): ?>
-          <div class="flex items-start gap-3 bg-white px-5 py-3.5">
+          <div class="flex min-w-0 items-start gap-3 bg-white px-5 py-3.5">
             <span class="mt-0.5 shrink-0 text-brand-500"><?= icon($ic, 'h-4 w-4') ?></span>
             <div class="min-w-0">
               <dt class="text-xs font-medium uppercase tracking-wide text-ink-faint"><?= e($label) ?></dt>

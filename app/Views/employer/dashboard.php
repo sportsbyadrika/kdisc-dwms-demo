@@ -38,7 +38,7 @@ $tone = ['applied' => 'badge-blue', 'shortlisted' => 'badge-amber', 'interview' 
   </div>
 <?php endif; ?>
 
-<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
   <?php foreach ([
     ['Published vacancies', $stats['published'], 'briefcase', '/employer/jobs?status=published'],
     ['Open positions', $stats['vacancies'], 'users', '/employer/jobs'],
@@ -57,7 +57,7 @@ $tone = ['applied' => 'badge-blue', 'shortlisted' => 'badge-amber', 'interview' 
   <?php endforeach; ?>
 </div>
 
-<div class="mt-4 grid gap-4 lg:grid-cols-3">
+<div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
   <!-- applications trend -->
   <div class="card lg:col-span-2">
     <div class="card-head">

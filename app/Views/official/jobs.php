@@ -2,7 +2,7 @@
 $tone = ['published' => 'badge-green', 'draft' => 'badge-amber', 'closed' => 'badge-gray', 'archived' => 'badge-gray']; ?>
 <?php partial('dash-header', ['title' => 'Job titles', 'sub' => 'Every vacancy on the platform, across all employers.']); ?>
 
-<form method="get" action="<?= url('/official/jobs') ?>" class="card card-pad mb-4 grid gap-3 sm:grid-cols-[1fr,200px,auto]">
+<form method="get" action="<?= url('/official/jobs') ?>" class="card card-pad mb-4 grid grid-cols-1 gap-3 sm:grid-cols-[1fr,200px,auto]">
   <div class="relative">
     <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint"><?= icon('search', 'h-4 w-4') ?></span>
     <label class="sr-only" for="mj-q">Search</label>

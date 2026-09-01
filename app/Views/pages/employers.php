@@ -5,7 +5,7 @@
 ]); ?>
 
 <section class="shell py-10">
-  <div class="grid gap-4 sm:grid-cols-3">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
     <?php foreach ([
       [$stats['seekers'], 'Registered job seekers', 'users'],
       [$stats['jobs'], 'Job titles published', 'briefcase'],
@@ -21,7 +21,7 @@
     <?php endforeach; ?>
   </div>
 
-  <div class="mt-10 grid gap-8 lg:grid-cols-3">
+  <div class="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
     <div class="lg:col-span-2 space-y-6">
       <div class="card card-pad">
         <h2 class="card-title">How it works</h2>
@@ -45,7 +45,7 @@
 
       <div class="card card-pad">
         <h2 class="card-title">What you get</h2>
-        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <?php foreach ([
             ['shield-check', 'Verified candidates', 'Identity and documents verified once, reused across every application.'],
             ['clipboard', 'Structured applications', 'Qualification, experience and certification data in a consistent shape.'],

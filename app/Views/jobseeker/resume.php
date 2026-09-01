@@ -4,7 +4,7 @@
   'sub'   => 'Upload up to five resumes. The one marked primary is attached to every application you send.',
 ]); ?>
 
-<div class="grid gap-4 lg:grid-cols-[1.5fr,1fr]">
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr,1fr]">
   <div class="space-y-4">
     <?php if ($resumes): ?>
       <div class="space-y-3">

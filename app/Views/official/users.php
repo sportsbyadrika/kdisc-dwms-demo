@@ -12,7 +12,7 @@ $formOpen = $editing !== null || has_errors();
   <div class="mb-4 rounded-card border border-success/30 bg-success/5 p-5">
     <p class="flex items-center gap-2 text-sm font-semibold text-success"><?= icon('key', 'h-4 w-4') ?>Temporary password generated</p>
     <p class="mt-1 text-sm text-ink-soft">Share these credentials securely. This password is shown only once and cannot be retrieved later.</p>
-    <dl class="mt-3 grid gap-3 sm:grid-cols-2">
+    <dl class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
       <div class="rounded bg-white px-4 py-2.5">
         <dt class="text-xs font-medium uppercase tracking-wide text-ink-faint">E-mail</dt>
         <dd class="font-mono text-sm font-semibold text-ink"><?= e($generated['email']) ?></dd>

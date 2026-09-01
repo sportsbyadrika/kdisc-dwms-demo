@@ -35,7 +35,7 @@ $social = [
 ];
 ?>
 <footer class="mt-16 border-t border-line bg-white">
-  <div class="shell grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-6">
+  <div class="shell grid grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-6">
 
     <div class="lg:col-span-2">
       <div class="flex items-center gap-2">

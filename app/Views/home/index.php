@@ -94,7 +94,7 @@ $cards = [
 
     <!-- search bar -->
     <form action="<?= url('/jobs') ?>" method="get" class="mt-6 rounded-card border border-line bg-white p-3 shadow-card sm:p-4">
-      <div class="grid gap-3 sm:grid-cols-[1fr,1fr,auto]">
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-[1fr,1fr,auto]">
         <div class="relative">
           <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint"><?= icon('search', 'h-4 w-4') ?></span>
           <label class="sr-only" for="hero-q">Job title or skill</label>
@@ -123,7 +123,7 @@ $cards = [
     </p>
   </div>
 
-  <div class="mt-8 grid gap-5 md:grid-cols-3">
+  <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
     <?php foreach ($cards as $c): ?>
       <a href="<?= url($c['path']) ?>"
          class="group relative flex flex-col overflow-hidden rounded-card bg-white p-6 shadow-card transition hover:-translate-y-1 hover:shadow-pop focus-visible:-translate-y-1">
@@ -175,7 +175,7 @@ $cards = [
     </a>
   </div>
 
-  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
     <?php foreach ($latestJobs as $j): ?>
       <article class="flex flex-col rounded-card bg-white p-5 shadow-card transition hover:shadow-pop">
         <div class="flex items-start gap-3">
@@ -207,9 +207,9 @@ $cards = [
 
 <!-- =================================================== skills + services -->
 <section class="bg-white py-10 sm:py-12">
-  <div class="shell grid gap-10 lg:grid-cols-2">
+  <div class="shell grid grid-cols-1 gap-10 lg:grid-cols-2">
     <?php if ($topSkills): ?>
-    <div>
+    <div class="min-w-0">
       <div class="flex items-end justify-between gap-3">
         <h2 class="section-title">Skilling programmes</h2>
         <a href="<?= url('/skills') ?>" class="text-sm font-semibold text-brand-500 hover:text-brand-700">See all</a>
@@ -236,7 +236,7 @@ $cards = [
     <?php endif; ?>
 
     <?php if ($services): ?>
-    <div>
+    <div class="min-w-0">
       <div class="flex items-end justify-between gap-3">
         <h2 class="section-title">Career services</h2>
         <a href="<?= url('/career-services') ?>" class="text-sm font-semibold text-brand-500 hover:text-brand-700">See all</a>
@@ -265,7 +265,7 @@ $cards = [
 
 <!-- ============================================================== CTA -->
 <section class="shell py-12">
-  <div class="grid gap-5 md:grid-cols-2">
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
     <div class="rounded-card bg-brand-700 p-8 text-white">
       <h2 class="text-xl font-semibold">Looking for work?</h2>
       <p class="mt-2 text-sm text-white/85">Verify your e-mail, complete e-KYC once, and apply to every opportunity with a single profile.</p>

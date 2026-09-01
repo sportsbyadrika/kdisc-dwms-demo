@@ -10,7 +10,7 @@ $editingPerms = $editing ? (json_decode((string) $editing['permissions'], true) 
 ]); ?>
 
 <div x-data="{ open: <?= $formOpen ? 'true' : 'false' ?> }" class="space-y-4">
-  <div class="grid gap-3 sm:grid-cols-2">
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
     <?php foreach ($roles as $r):
         $perms = json_decode((string) $r['permissions'], true) ?: [];
         $isAll = in_array('*', $perms, true); ?>
@@ -79,7 +79,7 @@ $editingPerms = $editing ? (json_decode((string) $editing['permissions'], true) 
       <fieldset class="mt-5">
         <legend class="label">Permissions <span class="text-danger">*</span></legend>
         <?php if ($m = error_for('permissions')): ?><p class="err mb-2"><?= icon('alert', 'h-3.5 w-3.5') ?><?= e($m) ?></p><?php endif; ?>
-        <div class="grid gap-2 sm:grid-cols-2">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <?php foreach ($permissions as $key => $label): ?>
             <label class="flex items-start gap-2.5 rounded-card border border-line px-3 py-2.5 text-sm transition hover:border-brand-200 hover:bg-brand-50/40">
               <input type="checkbox" name="permissions[]" value="<?= e($key) ?>" class="checkbox"

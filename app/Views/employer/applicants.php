@@ -110,7 +110,7 @@ $tone = [
           <?php endif; ?>
 
           <?php if ($a['status'] !== 'withdrawn'): ?>
-            <form method="post" action="<?= url('/employer/applications/' . $a['id'] . '/status') ?>" class="grid gap-3 sm:grid-cols-[200px,1fr,auto] sm:items-end">
+            <form method="post" action="<?= url('/employer/applications/' . $a['id'] . '/status') ?>" class="grid grid-cols-1 gap-3 sm:grid-cols-[200px,1fr,auto] sm:items-end">
               <?= csrf_field() ?>
               <div>
                 <label class="label" for="st-<?= (int) $a['id'] ?>">Status</label>
