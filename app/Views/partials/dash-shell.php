@@ -1,39 +1,44 @@
 <?php
 /**
- * Sidebar + content shell shared by the seeker, employer and official areas.
+ * Content + sidebar shell shared by the seeker, employer and official areas.
+ * The sidebar sits on the right from the lg breakpoint up; below it the aside
+ * stacks above the content, which is why it stays first in the DOM.
  * @var string $slot  @var array $nav  @var array $identity
  */
 $current = current_path();
 ?>
-<div class="shell grid grid-cols-1 gap-6 py-6 lg:grid-cols-[260px,1fr] lg:py-8">
+<div class="shell grid grid-cols-1 gap-6 py-6 lg:grid-cols-[1fr,260px] lg:py-8">
 
-  <aside class="lg:sticky lg:top-20 lg:self-start" x-data="{ open: false }">
+  <aside class="lg:order-2 lg:sticky lg:top-20 lg:self-start" x-data="{ open: false }">
     <!-- identity card -->
-    <div class="overflow-hidden rounded-card bg-white shadow-card">
-      <div class="h-16 bg-gradient-to-r from-brand-700 to-brand-500"></div>
-      <div class="px-4 pb-4">
-        <span class="-mt-8 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-brand-100 text-lg font-bold text-brand-700">
+    <div class="rounded-card bg-white p-4 shadow-card">
+      <div class="flex items-center gap-3.5">
+        <span class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-brand-50 text-base font-bold text-brand-700 ring-1 ring-black/5">
           <?php if (!empty($identity['photo'])): ?>
             <img src="<?= e(upload_url($identity['photo'])) ?>" alt="" class="h-full w-full object-cover">
           <?php else: ?><?= e(initials($identity['name'] ?? 'U')) ?><?php endif; ?>
         </span>
-        <p class="mt-2 truncate text-sm font-semibold text-ink"><?= e($identity['name'] ?? '') ?></p>
-        <p class="truncate text-xs text-ink-faint"><?= e($identity['subtitle'] ?? '') ?></p>
-        <?php if (!empty($identity['badges'])): ?>
-          <div class="mt-2 flex flex-wrap gap-1"><?php foreach ($identity['badges'] as $b) { echo $b; } ?></div>
-        <?php endif; ?>
-        <?php if (isset($identity['score'])): ?>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-xs">
-              <span class="font-medium text-ink-soft">Profile strength</span>
-              <span class="font-bold text-brand-700"><?= (int) $identity['score'] ?>%</span>
-            </div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-black/10">
-              <div class="h-full rounded-full bg-brand-500 transition-all" style="width: <?= (int) $identity['score'] ?>%"></div>
-            </div>
-          </div>
-        <?php endif; ?>
+        <div class="min-w-0">
+          <p class="truncate text-sm font-semibold text-ink"><?= e($identity['name'] ?? '') ?></p>
+          <p class="truncate text-xs text-ink-faint"><?= e($identity['subtitle'] ?? '') ?></p>
+        </div>
       </div>
+
+      <?php if (!empty($identity['badges'])): ?>
+        <div class="mt-3 flex flex-wrap gap-1"><?php foreach ($identity['badges'] as $b) { echo $b; } ?></div>
+      <?php endif; ?>
+
+      <?php if (isset($identity['score'])): ?>
+        <div class="mt-3 border-t border-line pt-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-medium text-ink-soft">Profile strength</span>
+            <span class="font-bold text-brand-700"><?= (int) $identity['score'] ?>%</span>
+          </div>
+          <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-black/10">
+            <div class="h-full rounded-full bg-brand-500 transition-all" style="width: <?= (int) $identity['score'] ?>%"></div>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
 
     <!-- mobile toggle -->
@@ -80,5 +85,5 @@ $current = current_path();
     </nav>
   </aside>
 
-  <div class="min-w-0"><?= $slot ?></div>
+  <div class="min-w-0 lg:order-1"><?= $slot ?></div>
 </div>
