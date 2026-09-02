@@ -4,29 +4,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // LinkedIn-inspired palette
+        // Indigo-violet palette. Surfaces stay white; the violet family carries
+        // every accent. Contrast checked against WCAG AA — see README.
         brand: {
-          50:  '#e8f1fb',
-          100: '#cfe3f7',
-          200: '#9fc7ef',
-          300: '#6fabe7',
-          400: '#3f8fdf',
-          500: '#0a66c2', // LinkedIn blue
-          600: '#0959a8',
-          700: '#004182', // hover / dark blue
-          800: '#00306b',
-          900: '#002550',
+          50:  '#f1f0fc',
+          100: '#e4e1f9',
+          200: '#cbc6f3',
+          300: '#ada5eb',
+          400: '#8b80e0',
+          500: '#5b4fc7', // primary: buttons, links, active states
+          600: '#4a3fb0',
+          700: '#3e3596', // hover / dark
+          800: '#332b7a',
+          900: '#241f57',
         },
         ink: {
-          DEFAULT: '#191919',
-          soft: 'rgba(0,0,0,0.60)',
-          faint: 'rgba(0,0,0,0.45)',
+          DEFAULT: '#221b45',              // near-black with a violet cast
+          soft:  'rgba(34,27,69,0.72)',
+          faint: 'rgba(34,27,69,0.65)',
         },
-        canvas: '#f4f2ee',   // LinkedIn feed background
-        line: '#e0dfdc',
-        success: '#057642',
-        warning: '#915907',
-        danger:  '#b24020',
+        canvas: '#f5f4fd',   // page background behind the white cards
+        line: '#e3e1f1',
+        success: '#0e7040',
+        warning: '#8a5a08',
+        danger:  '#b3261e',
       },
       fontFamily: {
         sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],

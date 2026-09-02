@@ -18,7 +18,7 @@ Every URL is extension-less (`/jobs`, `/dashboard/kyc`), routed through
 | Database  | MySQL 5.7+ / MariaDB 10.3+ via PDO prepared statements |
 | CSS       | Tailwind CSS 3, compiled to `assets/css/app.css`    |
 | JS        | Alpine.js 3, vendored at `assets/js/alpine.min.js`  |
-| Theme     | LinkedIn-inspired palette (`#0a66c2` / `#004182` / `#f4f2ee`) |
+| Theme     | Indigo-violet palette (`#5b4fc7` / `#3e3596` / `#f5f4fd`), white surfaces |
 
 ## Configuration
 
@@ -204,6 +204,13 @@ uploads/               user uploads (+ .htaccess: never executed)
 - Sessions are HTTP-only, `SameSite=Lax`, and expire after inactivity.
 - Aadhaar numbers are never stored — only the masked reference and the
   recorded consent (see *Deferred integrations*).
+
+## Accessibility
+
+Colour is defined once, as tokens in `tailwind.config.js` — nothing hardcodes a
+hex. Every rendered text/background pair on the public site and across the
+seeker, employer and official areas was measured against WCAG AA (4.5:1 for
+body text, 3:1 for large text) and passes.
 
 ## Deferred integrations
 

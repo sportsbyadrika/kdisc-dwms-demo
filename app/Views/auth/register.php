@@ -84,7 +84,7 @@ ob_start();
         <?= csrf_field() ?>
 
         <div x-data="filePicker('', 'image')" class="flex items-center gap-5">
-          <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-brand-50 text-brand-300">
+          <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-brand-50 text-brand-400">
             <template x-if="preview"><img :src="preview" alt="" class="h-full w-full object-cover"></template>
             <template x-if="!preview"><span><?= icon('user', 'h-8 w-8') ?></span></template>
           </span>

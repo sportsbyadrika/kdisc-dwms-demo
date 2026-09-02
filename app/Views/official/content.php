@@ -15,7 +15,7 @@ $statusTone = ['published' => 'badge-green', 'draft' => 'badge-amber', 'archived
       <?php foreach ($rows as $r): $d = $spec['display']($r); ?>
         <article class="card card-pad">
           <div class="flex flex-wrap items-start gap-4">
-            <span class="flex h-14 w-20 shrink-0 items-center justify-center overflow-hidden rounded bg-brand-50 text-brand-300">
+            <span class="flex h-14 w-20 shrink-0 items-center justify-center overflow-hidden rounded bg-brand-50 text-brand-400">
               <?php if (!empty($d['image'])): ?>
                 <img src="<?= e(upload_url($d['image'])) ?>" alt="" class="h-full w-full object-cover">
               <?php else: ?><?= icon($spec['icon'], 'h-6 w-6') ?><?php endif; ?>

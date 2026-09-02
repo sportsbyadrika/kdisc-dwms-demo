@@ -14,7 +14,7 @@ $bodyClass = $bodyClass ?? '';
 <meta name="description" content="<?= e($metaDescription ?? setting('about_short', 'Digital Workforce Management System')) ?>">
 <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
 <meta name="dwms-base" content="<?= e(base_url()) ?>">
-<meta name="theme-color" content="#0a66c2">
+<meta name="theme-color" content="#5b4fc7">
 <title><?= e($title) ?></title>
 <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
 <link rel="stylesheet" href="<?= asset('css/app.css') ?>">

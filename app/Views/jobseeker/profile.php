@@ -11,7 +11,7 @@
       <?= csrf_field() ?>
 
       <div x-data="filePicker('<?= e(upload_url($seeker['photo']) ?? '') ?>', 'image')" class="flex items-center gap-5">
-        <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-brand-50 text-lg font-bold text-brand-300">
+        <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-brand-50 text-lg font-bold text-brand-600">
           <template x-if="preview"><img :src="preview" alt="" class="h-full w-full object-cover"></template>
           <template x-if="!preview"><span><?= e(initials($seeker['name'])) ?></span></template>
         </span>
