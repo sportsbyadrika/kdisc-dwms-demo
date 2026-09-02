@@ -18,7 +18,7 @@ $cards = [
         'path'  => '/skills',
         'cta'   => 'Browse programmes',
         'stat'  => $stats['skills'] . ' programmes',
-        'tone'  => 'from-success to-emerald-700',
+        'tone'  => 'from-emerald-500 to-emerald-700',
     ],
     [
         'title' => 'Career Services',
@@ -27,7 +27,7 @@ $cards = [
         'path'  => '/career-services',
         'cta'   => 'Explore services',
         'stat'  => $stats['services'] . ' services',
-        'tone'  => 'from-warning to-amber-700',
+        'tone'  => 'from-amber-500 to-amber-600',
     ],
 ];
 ?>

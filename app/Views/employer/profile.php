@@ -24,7 +24,7 @@ $cls = static fn(string $f) => 'field' . (error_for($f) ? ' field-error' : '');
         <h2 class="card-title">Organisation details</h2>
         <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div class="sm:col-span-2 flex items-center gap-5" x-data="filePicker('<?= e(upload_url($employer['logo']) ?? '') ?>', 'image')">
-            <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-card border border-line bg-brand-50 text-brand-300">
+            <span class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-card border border-line bg-brand-50 text-brand-400">
               <template x-if="preview"><img :src="preview" alt="" class="h-full w-full object-cover"></template>
               <template x-if="!preview"><span><?= icon('building', 'h-8 w-8') ?></span></template>
             </span>

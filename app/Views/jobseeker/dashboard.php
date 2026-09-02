@@ -160,7 +160,7 @@ $kycTone = [
         <ul class="divide-y divide-line">
           <?php foreach ($saved as $s): ?>
             <li class="flex items-center gap-3 px-5 py-3">
-              <span class="shrink-0 text-brand-300"><?= icon('bookmark', 'h-4 w-4') ?></span>
+              <span class="shrink-0 text-brand-400"><?= icon('bookmark', 'h-4 w-4') ?></span>
               <div class="min-w-0 flex-1">
                 <a href="<?= url('/jobs/' . $s['job_id']) ?>" class="block truncate text-sm font-medium text-ink hover:text-brand-700"><?= e($s['title']) ?></a>
                 <p class="truncate text-xs text-ink-faint"><?= e($s['company_name']) ?> · closes <?= e(fdate($s['last_date'])) ?></p>

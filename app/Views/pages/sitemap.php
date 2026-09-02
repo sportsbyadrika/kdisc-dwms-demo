@@ -36,7 +36,7 @@ $map = [
       <ul class="mt-3 space-y-2">
         <?php foreach ($links as [$label, $path]): ?>
           <li><a href="<?= url($path) ?>" class="flex items-center gap-1.5 text-sm text-ink-soft hover:text-brand-700">
-            <?= icon('chevron-right', 'h-3 w-3 text-brand-300') ?><?= e($label) ?></a></li>
+            <?= icon('chevron-right', 'h-3 w-3 text-brand-400') ?><?= e($label) ?></a></li>
         <?php endforeach; ?>
       </ul>
     </div>
