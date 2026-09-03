@@ -3,15 +3,6 @@
 $pageTitle = null;
 $cards = [
     [
-        'title' => 'Jobs',
-        'desc'  => 'Search verified vacancies published by registered employers, check your eligibility and apply in a single click.',
-        'icon'  => 'briefcase',
-        'path'  => '/jobs',
-        'cta'   => 'Search jobs',
-        'stat'  => $stats['jobs'] . ' open positions',
-        'tone'  => 'from-brand-500 to-brand-700',
-    ],
-    [
         'title' => 'Skills',
         'desc'  => 'Enrol in government-backed skilling programmes with certification, stipend support and placement linkage.',
         'icon'  => 'sparkles',
@@ -19,6 +10,15 @@ $cards = [
         'cta'   => 'Browse programmes',
         'stat'  => $stats['skills'] . ' programmes',
         'tone'  => 'from-emerald-500 to-emerald-700',
+    ],
+    [
+        'title' => 'Jobs',
+        'desc'  => 'Search verified vacancies published by registered employers, check your eligibility and apply in a single click.',
+        'icon'  => 'briefcase',
+        'path'  => '/jobs',
+        'cta'   => 'Search jobs',
+        'stat'  => $stats['jobs'] . ' open positions',
+        'tone'  => 'from-brand-500 to-brand-700',
     ],
     [
         'title' => 'Career Services',
@@ -119,7 +119,7 @@ $cards = [
   <div class="text-center">
     <h2 id="services-heading" class="section-title">What are you here for?</h2>
     <p class="mx-auto mt-2 max-w-2xl text-sm text-ink-soft">
-      Three doorways into the workforce ecosystem — find work, build the skills that get you there, and get guided along the way.
+      Three doorways into the workforce ecosystem — build the skills you need, find the work they lead to, and get guided along the way.
     </p>
   </div>
 
@@ -128,11 +128,13 @@ $cards = [
       <a href="<?= url($c['path']) ?>"
          class="group relative flex flex-col overflow-hidden rounded-card bg-white p-6 shadow-card transition hover:-translate-y-1 hover:shadow-pop focus-visible:-translate-y-1">
         <span class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r <?= $c['tone'] ?>"></span>
-        <span class="flex h-12 w-12 items-center justify-center rounded-card bg-gradient-to-br <?= $c['tone'] ?> text-white shadow-sm">
-          <?= icon($c['icon'], 'h-6 w-6') ?>
+        <span class="flex items-center justify-between gap-3">
+          <h3 class="text-lg font-semibold text-ink group-hover:text-brand-700"><?= e($c['title']) ?></h3>
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br <?= $c['tone'] ?> text-white shadow-sm">
+            <?= icon($c['icon'], 'h-6 w-6') ?>
+          </span>
         </span>
-        <h3 class="mt-4 text-lg font-semibold text-ink group-hover:text-brand-700"><?= e($c['title']) ?></h3>
-        <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft"><?= e($c['desc']) ?></p>
+        <p class="mt-3 flex-1 text-sm leading-relaxed text-ink-soft"><?= e($c['desc']) ?></p>
         <span class="mt-4 flex items-center justify-between border-t border-line pt-4">
           <span class="text-xs font-semibold uppercase tracking-wide text-ink-faint"><?= e($c['stat']) ?></span>
           <span class="inline-flex items-center gap-1 text-sm font-semibold text-brand-500 group-hover:text-brand-700">
