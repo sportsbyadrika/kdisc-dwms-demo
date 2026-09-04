@@ -40,20 +40,22 @@ $cards = [
             active: 0,
             total: <?= count($slides) ?>,
             timer: null,
-            start() { this.timer = setInterval(() => this.next(), 7000); },
+            start() { this.stop(); this.timer = setInterval(() => this.next(), 7000); },
             stop()  { clearInterval(this.timer); },
             next()  { this.active = (this.active + 1) % this.total; },
             prev()  { this.active = (this.active - 1 + this.total) % this.total; },
             go(i)   { this.active = i; }
          }"
          x-init="start()" @mouseenter="stop()" @mouseleave="start()"
-         class="relative overflow-hidden rounded-card shadow-card">
+         class="relative grid overflow-hidden rounded-card shadow-card">
 
       <?php foreach ($slides as $i => $s): ?>
+        <!-- Every slide occupies the same grid cell, so each one keeps the
+             container open on its own; the hidden ones simply drop out. -->
         <div x-show="active === <?= $i ?>" x-transition:enter="transition ease-out duration-500"
              x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
              <?= $i === 0 ? '' : 'x-cloak' ?>
-             class="<?= $i === 0 ? 'relative' : 'absolute inset-0' ?>">
+             class="col-start-1 row-start-1">
           <div class="relative min-h-[300px] bg-brand-700 sm:min-h-[360px] lg:min-h-[400px]">
             <img src="<?= e(upload_url($s['image'], asset('img/hero-pattern.svg'))) ?>" alt=""
                  class="absolute inset-0 h-full w-full object-cover" <?= $i === 0 ? '' : 'loading="lazy"' ?>>
