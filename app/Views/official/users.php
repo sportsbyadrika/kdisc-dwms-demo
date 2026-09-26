@@ -31,14 +31,14 @@ $showGroupCol = $hasGroups && $selected === '';
     <?php endif; ?>
   </div>
 
-  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
     <!-- All users -->
     <a href="<?= url('/official/users') ?>" aria-current="<?= $selected === '' ? 'true' : 'false' ?>"
        class="group flex items-center gap-3 rounded-card border bg-white p-3.5 shadow-card transition hover:shadow-pop <?= $selected === '' ? 'border-brand-500 ring-1 ring-brand-500' : 'border-transparent' ?>">
       <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-card <?= $selected === '' ? 'bg-brand-500 text-white' : 'bg-brand-50 text-brand-500' ?>">
         <?= icon('grid', 'h-4 w-4') ?>
       </span>
-      <span class="min-w-0 flex-1 text-xs font-semibold leading-snug text-ink">All users</span>
+      <span class="min-w-0 flex-1 text-sm font-semibold leading-snug text-ink">All users</span>
       <span class="shrink-0 rounded-full bg-black/5 px-2 py-0.5 text-[11px] font-bold text-ink-soft"><?= (int) $total ?></span>
     </a>
 
@@ -49,7 +49,7 @@ $showGroupCol = $hasGroups && $selected === '';
         <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-card <?= $on ? 'bg-brand-500 text-white' : 'bg-brand-50 text-brand-500' ?>">
           <?= icon($g['icon'], 'h-4 w-4') ?>
         </span>
-        <span class="min-w-0 flex-1 text-xs font-semibold leading-snug text-ink"><?= e($g['name']) ?></span>
+        <span class="min-w-0 flex-1 text-sm font-semibold leading-snug text-ink"><?= e($g['name']) ?></span>
         <span class="shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold <?= $on ? 'bg-brand-100 text-brand-700' : 'bg-black/5 text-ink-soft' ?>"><?= (int) $g['users'] ?></span>
       </a>
     <?php endforeach; ?>
@@ -60,7 +60,7 @@ $showGroupCol = $hasGroups && $selected === '';
         <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-card <?= $on ? 'bg-brand-500 text-white' : 'bg-black/5 text-ink-faint' ?>">
           <?= icon('alert', 'h-4 w-4') ?>
         </span>
-        <span class="min-w-0 flex-1 text-xs font-semibold leading-snug text-ink">No group</span>
+        <span class="min-w-0 flex-1 text-sm font-semibold leading-snug text-ink">No group</span>
         <span class="shrink-0 rounded-full bg-black/5 px-2 py-0.5 text-[11px] font-bold text-ink-soft"><?= (int) $ungrouped ?></span>
       </a>
     <?php endif; ?>
