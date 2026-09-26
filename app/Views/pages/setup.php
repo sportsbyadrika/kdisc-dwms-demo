@@ -74,6 +74,44 @@ DB_PASS="your_password"</code></pre>
     </div>
   </div>
 
+  <?php if ($installed): ?>
+    <div class="card mt-5">
+      <div class="card-head">
+        <h2 class="card-title">4. Database updates</h2>
+        <?php if ($pending): ?><span class="badge-amber"><?= count($pending) ?> pending</span>
+        <?php else: ?><span class="badge-green"><?= icon('check', 'h-3 w-3') ?>Up to date</span><?php endif; ?>
+      </div>
+      <div class="card-pad">
+        <?php if ($pending): ?>
+          <p class="text-sm text-ink-soft">
+            This copy of the code carries database changes that have not been applied here yet.
+            Apply them now — each one runs once and is recorded.
+          </p>
+          <ul class="mt-3 space-y-1">
+            <?php foreach ($pending as $file): ?>
+              <li class="flex items-center gap-2 text-sm text-ink">
+                <span class="text-warning"><?= icon('clock', 'h-4 w-4') ?></span>
+                <code class="rounded bg-black/5 px-1.5 py-0.5 text-xs"><?= e($file) ?></code>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+          <form method="post" action="<?= url('/setup/migrate') ?>" class="mt-4">
+            <?= csrf_field() ?>
+            <button type="submit" class="btn-primary"><?= icon('refresh', 'h-4 w-4') ?>Apply <?= count($pending) ?> update(s)</button>
+          </form>
+        <?php else: ?>
+          <p class="flex items-center gap-2 text-sm font-medium text-success">
+            <?= icon('check-circle', 'h-5 w-5') ?>Every database update has been applied.
+          </p>
+          <p class="mt-2 text-xs text-ink-faint">
+            You can also run these from the command line with
+            <code class="rounded bg-black/5 px-1.5 py-0.5">php database/migrate.php</code>.
+          </p>
+        <?php endif; ?>
+      </div>
+    </div>
+  <?php endif; ?>
+
   <p class="mt-6 text-center text-xs text-ink-faint">
     After installation, remove the two <code>/setup</code> routes from <code>app/routes.php</code>,
     and set <code>APP_DEBUG=false</code> and <code>MAIL_DEMO_OTP=false</code> in <code>.env</code>.

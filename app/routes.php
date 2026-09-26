@@ -8,6 +8,7 @@
 /* ------------------------------------------------------------- installer */
 $router->get('/setup',          'SetupController@index');
 $router->post('/setup/install', 'SetupController@install');
+$router->post('/setup/migrate', 'SetupController@migrate');
 
 /* ---------------------------------------------------------------- public */
 $router->get('/',               'HomeController@index');
