@@ -77,6 +77,10 @@ Every later deployment is just **Update from Remote → Deploy HEAD Commit**.
 The deployment never overwrites `.env` (`cp -n`) and never clears `uploads/`,
 so credentials and user files survive.
 
+A deployment copies files only — it never touches the database. If the commit
+you deployed adds tables or columns, apply them afterwards as described in
+[Database updates](#database-updates-migrations).
+
 ## Installing manually (without cPanel Git)
 
 1. Upload the repository contents into the web root, or into a sub folder.
@@ -99,6 +103,74 @@ so credentials and user files survive.
 | Job seeker | `/login`           | seeker@dwms.local   | `Seeker@123`  |
 
 Change all three before the site is reachable publicly.
+
+## Database updates (migrations)
+
+`database/schema.sql` describes the tables a *fresh* install creates. Anything
+added after a site went live ships as a numbered file in
+`database/migrations/`, and an applied file is recorded in the `migrations`
+table so it is never run twice.
+
+Apply pending updates in whichever way suits the server:
+
+- **From the browser** — visit `/setup`. The **Database updates** card lists
+  every pending file with an **Apply** button, and turns green once there is
+  nothing left. Fresh installs run the migrations automatically.
+- **From the shell** — `php database/migrate.php`. Use this on a site where the
+  two `/setup` routes have already been removed, as the install steps advise.
+  The script refuses to run over HTTP.
+
+Adding an update is just a new `database/migrations/YYYY_MM_DD_NN_name.sql`.
+Write it so that running it twice is harmless — the shipped files guard every
+`ALTER TABLE` with an `information_schema` check and use
+`INSERT … ON DUPLICATE KEY UPDATE`.
+
+## User groups
+
+A user carries three independent attributes:
+
+| | |
+|---|---|
+| **Role** | what they may do — the permission list |
+| **Office** | where they sit in the offices → departments → sections tree |
+| **Group** | which kind of organisation or function they belong to |
+
+Groups exist because the first two do not answer "show me every placement
+coordinator": a coordinator sits inside a college office and holds an ordinary
+role, so the grouping has to be stored separately. Nine groups ship in
+`user_groups`:
+
+Government Departments · Universities · Educational Institutions · Programme
+Executives · Placement Coordinators · District Officials · Job Stations ·
+SDPK Centers · K-DISC Officials
+
+`/official/users` shows them as cards with a live count; selecting a card
+filters the table to that group, and **No group** appears only while some user
+is still unassigned. The group is also a field on the user form, and it
+defaults to whichever card is currently selected when a new user is added.
+Groups live in a table, so more can be added without a code change.
+
+### Kerala demo dataset
+
+`database/migrations/2026_09_26_02_kerala_demo_dataset.sql` populates all nine
+groups with roughly 120 Kerala offices and one contact account each — the
+universities (Digital University Kerala, KTU, MG, Calicut, Kerala, Kannur,
+CUSAT, Kerala Agricultural, Veterinary, Fisheries, Health Sciences, Sanskrit …),
+government and aided and self-financing engineering colleges, polytechnics,
+ITIs, arts and science colleges, medical and paramedical colleges, district
+employment exchanges, job stations and SDPK centres.
+
+Read before you deploy it:
+
+- The **institutions are real**; every **person, e-mail address and mobile
+  number is invented** for the demo.
+- Demo accounts **cannot sign in**. They hold a bcrypt hash of a random string
+  nobody has, and `must_reset = 1`. An administrator has to issue a password
+  before any of them becomes usable.
+- Job station and SDPK centre names are **representative placeholders keyed to
+  a location**, not a verified published list.
+- To keep a production site clean, delete the file before deploying — or, if it
+  has already been applied, delete the accounts from `/official/users`.
 
 ## Local development
 
@@ -160,6 +232,9 @@ in production is refused locally too.
 - Super admin creates **offices → departments → sections** as one tree, then
   users against them. A new user gets a one-time password shown once and must
   change it at first sign-in.
+- Users carry a **group** as well as a role and an office. The users page leads
+  with a card per group, each tagged with its count, and selecting one filters
+  the table — see [User groups](#user-groups).
 - Roles and permissions are editable; the super administrator role always keeps
   full access.
 - Employer verification (verify / reject / suspend, with a recorded note),
@@ -181,12 +256,14 @@ app/
   config.sample.php    reads every value from .env
   routes.php           route table
   helpers.php          env(), url(), view(), validate(), store_upload(), icon() …
-  Core/                Env, Database, Router, Auth, Lookup, icons
+  Core/                Env, Database, Router, Auth, Lookup, Migrator, icons
   Controllers/         one controller per feature area
   Views/               layouts, partials and page templates
   .htaccess            denies direct web access
 assets/                compiled css, js and svg (+ .htaccess: no execution)
 database/              schema.sql + seed.sql (+ .htaccess: denied)
+  migrations/          numbered .sql files applied once and recorded
+  migrate.php          CLI runner for those files
 uploads/               user uploads (+ .htaccess: never executed)
 ```
 

@@ -128,11 +128,57 @@ class OfficialAdminController extends OfficialBaseController
     public function users(): void
     {
         $this->authorise('users.manage');
+
+        // Groups arrived after the first release, so the files can be on the
+        // server a few minutes before the migration is applied. Without the
+        // table the page drops back to a plain list rather than failing.
+        $hasGroups = DB::tableExists('user_groups');
+
+        // Cards above the table: one per group, each carrying its own count so
+        // the tag and the filtered result can never disagree.
+        $groups = $hasGroups ? DB::all(
+            'SELECT g.*, (SELECT COUNT(*) FROM users u WHERE u.group_id = g.id) AS users
+             FROM user_groups g WHERE g.is_active = 1 ORDER BY g.sort_order, g.name'
+        ) : [];
+
+        $slug     = $hasGroups ? (string) input('group') : '';
+        $selected = null;
+        foreach ($groups as $g) {
+            if ($g['slug'] === $slug) {
+                $selected = $g;
+            }
+        }
+        // "ungrouped" is not a row in user_groups; it catches users created
+        // before groups existed so they never fall out of the list entirely.
+        $ungrouped = $hasGroups
+            ? (int) DB::value('SELECT COUNT(*) FROM users WHERE group_id IS NULL')
+            : 0;
+        if ($slug !== '' && $selected === null && $slug !== 'ungrouped') {
+            $slug = '';
+        }
+
+        $where  = '1';
+        $params = [];
+        if ($slug === 'ungrouped') {
+            $where = 'u.group_id IS NULL';
+        } elseif ($selected) {
+            $where    = 'u.group_id = ?';
+            $params[] = $selected['id'];
+        }
+
         $users = DB::all(
-            'SELECT u.*, r.name AS role_name, r.slug AS role_slug, o.name AS office_name, o.type AS office_type
-             FROM users u JOIN roles r ON r.id = u.role_id LEFT JOIN offices o ON o.id = u.office_id
-             ORDER BY u.is_active DESC, u.name'
+            'SELECT u.*, r.name AS role_name, r.slug AS role_slug,
+                    o.name AS office_name, o.type AS office_type'
+            . ($hasGroups ? ', g.name AS group_name, g.slug AS group_slug, g.icon AS group_icon' : '')
+            . ' FROM users u
+             JOIN roles r ON r.id = u.role_id
+             LEFT JOIN offices o ON o.id = u.office_id'
+            . ($hasGroups ? ' LEFT JOIN user_groups g ON g.id = u.group_id' : '')
+            . ' WHERE ' . $where . '
+             ORDER BY u.is_active DESC, u.name',
+            $params
         );
+
         $editing = null;
         if ($editId = (int) input('edit')) {
             $editing = DB::first('SELECT * FROM users WHERE id = ?', [$editId]);
@@ -141,6 +187,11 @@ class OfficialAdminController extends OfficialBaseController
         $this->shell('official.users', [
             'pageTitle' => 'Users',
             'users'     => $users,
+            'groups'    => $groups,
+            'hasGroups' => $hasGroups,
+            'selected'  => $slug === 'ungrouped' ? 'ungrouped' : ($selected['slug'] ?? ''),
+            'ungrouped' => $ungrouped,
+            'total'     => (int) DB::value('SELECT COUNT(*) FROM users'),
             'editing'   => $editing,
             'roles'     => DB::all('SELECT id, name, slug FROM roles ORDER BY is_system DESC, name'),
             'offices'   => DB::all("SELECT id, name, type FROM offices WHERE is_active = 1 ORDER BY type = 'office' DESC, name"),
@@ -177,6 +228,13 @@ class OfficialAdminController extends OfficialBaseController
         $role = DB::first('SELECT * FROM roles WHERE id = ?', [$data['role_id']]);
         if (!$errors && !$role) {
             $errors['role_id'] = 'Choose a valid role.';
+        }
+        if (DB::tableExists('user_groups')) {
+            $data['group_id'] = (int) input('group_id') ?: null;
+            if (!$errors && $data['group_id']
+                && !DB::value('SELECT id FROM user_groups WHERE id = ? AND is_active = 1', [$data['group_id']])) {
+                $errors['group_id'] = 'Choose a valid user group.';
+            }
         }
         // Only a super administrator may mint another one.
         if (!$errors && $role && $role['slug'] === 'super_admin' && !$this->isSuperAdmin()) {

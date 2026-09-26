@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Core\Database as DB;
+use App\Core\Migrator;
 use PDO;
 use Throwable;
 
@@ -39,6 +40,7 @@ class SetupController
             'dbName'    => config('db.name'),
             'dbHost'    => config('db.host'),
             'envExists' => $envExists,
+            'pending'   => $installed ? Migrator::pending() : [],
         ], 'blank');
     }
 
@@ -62,7 +64,41 @@ class SetupController
             redirect('/setup');
         }
 
+        // schema.sql is the baseline; everything added since lives in
+        // database/migrations and is applied on top of it.
+        $result = Migrator::run();
+        if ($result['failed'] !== null) {
+            flash('error', 'Tables created, but migration ' . $result['failed'] . ' failed: ' . $result['error']);
+            redirect('/setup');
+        }
+
         flash('success', 'Database installed. Sign in as admin@dwms.local with the password Admin@12345 and change it immediately.');
+        redirect('/setup');
+    }
+
+    /** Apply migrations to a database that is already installed. */
+    public function migrate(): void
+    {
+        verify_csrf();
+        if (!DB::ok() || !DB::tableExists('settings')) {
+            flash('error', 'Install the database first.');
+            redirect('/setup');
+        }
+
+        $pending = Migrator::pending();
+        if (!$pending) {
+            flash('info', 'The database is already up to date.');
+            redirect('/setup');
+        }
+
+        $result = Migrator::run();
+        if ($result['failed'] !== null) {
+            flash('error', 'Migration ' . $result['failed'] . ' failed: ' . $result['error']
+                . ($result['applied'] ? ' Applied before it: ' . implode(', ', $result['applied']) . '.' : ''));
+            redirect('/setup');
+        }
+
+        flash('success', count($result['applied']) . ' migration(s) applied: ' . implode(', ', $result['applied']) . '.');
         redirect('/setup');
     }
 
