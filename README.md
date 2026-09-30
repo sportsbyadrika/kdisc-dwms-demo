@@ -186,6 +186,12 @@ in production is refused locally too.
 
 `assets/css/app.css` is committed, so the CSS toolchain is optional.
 
+Every URL that `asset()` builds carries a `?v=<modification time>` stamp.
+`.htaccess` lets browsers keep CSS and JS for a week, so without that stamp a
+returning visitor renders newly deployed markup against the stylesheet they
+cached last week — classes the old build never compiled simply do nothing.
+Rebuild the CSS before committing and the stamp takes care of itself.
+
 ## What is in the MVP
 
 ### Public

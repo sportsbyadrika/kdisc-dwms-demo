@@ -48,9 +48,21 @@ function url(string $path = '/', array $query = []): string
     return $u;
 }
 
+/**
+ * URL for a file under assets/, fingerprinted with its modification time.
+ *
+ * .htaccess tells browsers to keep CSS and JS for a week, so without a
+ * changing URL a returning visitor renders today's markup against last week's
+ * stylesheet. The ?v= stamp changes whenever the file does, which busts that
+ * cache on deploy while leaving the long expiry in place.
+ */
 function asset(string $path): string
 {
-    return base_url() . '/assets/' . ltrim($path, '/');
+    $path = ltrim($path, '/');
+    $url  = base_url() . '/assets/' . $path;
+    $stamp = @filemtime(DWMS_ROOT . '/assets/' . $path);
+
+    return $stamp ? $url . '?v=' . $stamp : $url;
 }
 
 function upload_url(?string $path, ?string $fallback = null): ?string
