@@ -2,7 +2,8 @@
 $map = [
   'Public' => [
     ['Home', '/'], ['Search jobs', '/jobs'], ['Skilling programmes', '/skills'],
-    ['Career services', '/career-services'], ['For employers', '/employers'],
+    ['Career services', '/career-services'], ['Assessment tests', '/assessments'],
+    ['For employers', '/employers'],
     ['About', '/about'], ['Contact', '/contact'], ['FAQ', '/faq'],
   ],
   'Job seeker' => [

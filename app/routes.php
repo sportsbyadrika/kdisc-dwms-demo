@@ -33,6 +33,10 @@ $router->get('/skills',               'SkillController@index');
 $router->get('/skills/{id}',          'SkillController@show');
 $router->post('/skills/{id}/enrol',   'SkillController@enrol');
 
+/* ------------------------------------------ public: assessments */
+$router->get('/assessments',          'AssessmentController@index');
+$router->get('/assessments/{slug}',   'AssessmentController@leave');
+
 /* --------------------------------------- public: career services */
 $router->get('/career-services',              'CareerServiceController@index');
 $router->get('/career-services/{id}',         'CareerServiceController@show');
