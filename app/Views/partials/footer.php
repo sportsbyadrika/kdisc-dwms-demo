@@ -5,6 +5,7 @@ $cols  = [
         ['Search jobs', '/jobs'],
         ['Skilling programmes', '/skills'],
         ['Career services', '/career-services'],
+        ['Assessment tests', '/assessments'],
         ['Register as job seeker', '/register'],
         ['Job seeker login', '/login'],
     ],

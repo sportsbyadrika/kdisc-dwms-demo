@@ -4,7 +4,7 @@
  * @var string $path @var string $heading @var string $sub @var string $crumb
  * @var array $spec @var array $active @var array $filters @var array $facets
  * @var array $result @var string $sortKey @var string $cards  (rendered HTML)
- * @var string $unit
+ * @var string $unit @var string|null $promo  (rendered HTML, shown above the results)
  */
 ?>
 <?php partial('page-hero', ['heading' => $heading, 'sub' => $sub, 'crumbs' => [$crumb => null]]); ?>
@@ -51,6 +51,8 @@
     </div>
 
     <?php partial('active-filters', ['path' => $path, 'spec' => $spec, 'filters' => $filters]); ?>
+
+    <?php if (!empty($promo)): ?><?= $promo ?><?php endif; ?>
 
     <?php if (!$result['rows']): ?>
       <?php partial('empty-state', [

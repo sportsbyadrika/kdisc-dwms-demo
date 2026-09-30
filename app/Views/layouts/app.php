@@ -12,6 +12,7 @@ $bodyClass = $bodyClass ?? '';
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="<?= e($metaDescription ?? setting('about_short', 'Digital Workforce Management System')) ?>">
+<?php if (!empty($noIndex)): ?><meta name="robots" content="noindex, follow"><?php endif; ?>
 <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
 <meta name="dwms-base" content="<?= e(base_url()) ?>">
 <meta name="theme-color" content="#5b4fc7">

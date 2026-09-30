@@ -189,8 +189,9 @@ in production is refused locally too.
 ## What is in the MVP
 
 ### Public
-- Home page with an admin-configurable hero panel, the three **Jobs / Skills /
-  Career Services** cards, live counts, latest vacancies and a full footer.
+- Home page with an admin-configurable hero panel, the **Skills / Jobs / Career
+  Services** cards and an **Assessment Test** band beneath them, live counts,
+  latest vacancies and a full footer.
 - Job search with a keyword bar and an e-commerce style facet panel (category,
   district, employment type, work mode, qualification, experience, salary).
   Facet counts reflect what a click actually returns.
@@ -199,6 +200,7 @@ in production is refused locally too.
   names the job and links to registration, then returns the visitor to it.
 - Skilling programmes and career services get the same treatment, with their
   own facets, detail pages and interest / booking actions.
+- **Assessment tests** point at partner platforms — see below.
 - About, Contact (with enquiry capture), FAQ, For employers, Privacy, Terms,
   Accessibility and Sitemap.
 
@@ -242,6 +244,27 @@ in production is refused locally too.
   enquiries, and site settings.
 - Home page hero panel, skilling programmes and career services are all
   content-managed with a draft → published → archived workflow.
+
+## Assessment tests
+
+`/assessments` lists the partner platforms a visitor can take a test on, and
+the same card appears on the home page and above the career services results.
+The tests themselves are **not hosted here** — each card leads to
+`/assessments/{slug}`, an interstitial that names the partner and the
+destination host before the visitor leaves, and only that page carries the
+outbound link (`target="_blank"`, `rel="noopener noreferrer external"`, and
+`noindex` on the interstitial itself).
+
+Partners live in one array — `PARTNERS` in
+`app/Controllers/AssessmentController.php`. Add, edit or retire one by editing
+that array; no database change is involved. Each entry needs a slug key plus
+`name`, `tagline`, `summary`, `covers`, `url`, `icon` and `tone`. The three
+shipped partners are TCS iON, foundit and EnglishScore, each pointed at the
+organisation's home page rather than a deep link, so verify the URL you want
+before going live.
+
+Nothing is written back to a job seeker's profile — scores stay with the
+partner, and the page says so.
 
 ## Layout
 
