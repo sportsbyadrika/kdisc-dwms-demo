@@ -29,7 +29,9 @@
 
           <p class="mt-3 text-sm leading-relaxed text-ink-soft"><?= e($p['summary']) ?></p>
 
-          <ul class="mt-4 flex flex-1 flex-wrap content-start gap-1.5">
+          <!-- items-start as well as content-start: the list grows to fill the card,
+               so without both a single row of chips stretches into tall ovals. -->
+          <ul class="mt-4 flex flex-1 flex-wrap content-start items-start gap-1.5">
             <?php foreach ($p['covers'] as $c): ?>
               <li class="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700"><?= e($c) ?></li>
             <?php endforeach; ?>
