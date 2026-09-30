@@ -146,26 +146,21 @@ $cards = [
       </a>
     <?php endforeach; ?>
 
-    <!-- Fourth card: a wide band across the second row, laid out horizontally
-         so it lands at roughly two thirds the height of the three above. -->
+    <!-- Fourth card: one column wide and centred under the three above, and
+         deliberately shorter than them — a compact doorway, not a fourth pillar. -->
     <a href="<?= url('/assessments') ?>"
-       class="group relative flex flex-col gap-4 overflow-hidden rounded-card bg-white p-5 shadow-card transition hover:-translate-y-1 hover:shadow-pop focus-visible:-translate-y-1 sm:flex-row sm:items-center sm:gap-5 sm:p-6 md:col-span-3">
+       class="group relative flex flex-col overflow-hidden rounded-card bg-white p-5 shadow-card transition hover:-translate-y-1 hover:shadow-pop focus-visible:-translate-y-1 md:col-start-2">
       <span class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 to-sky-700"></span>
-      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-sky-500 to-sky-700 text-white shadow-sm">
-        <?= icon('target', 'h-6 w-6') ?>
-      </span>
-      <span class="min-w-0 flex-1">
-        <h3 class="text-lg font-semibold text-ink group-hover:text-brand-700">Assessment Test</h3>
-        <p class="mt-1 text-sm leading-relaxed text-ink-soft">
-          Measure your aptitude, job-ready skills and English before you apply — each test is taken on the partner’s own platform.
-        </p>
-        <span class="mt-2.5 flex flex-wrap gap-1.5">
-          <?php foreach (['TCS iON', 'foundit', 'EnglishScore'] as $partner): ?>
-            <span class="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700"><?= e($partner) ?></span>
-          <?php endforeach; ?>
+      <span class="flex items-center justify-between gap-3">
+        <h3 class="text-base font-semibold text-ink group-hover:text-brand-700">Assessment Test</h3>
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-sky-500 to-sky-700 text-white shadow-sm">
+          <?= icon('target', 'h-5 w-5') ?>
         </span>
       </span>
-      <span class="flex shrink-0 items-center justify-between gap-4 border-t border-line pt-3 sm:justify-end sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
+      <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+        Measure your aptitude, skills and English with TCS iON, foundit or EnglishScore.
+      </p>
+      <span class="mt-3 flex items-center justify-between gap-3">
         <span class="text-xs font-semibold uppercase tracking-wide text-ink-faint">3 partners</span>
         <span class="inline-flex items-center gap-1 text-sm font-semibold text-brand-500 group-hover:text-brand-700">
           Take a test<?= icon('arrow-right', 'h-4 w-4 transition-transform group-hover:translate-x-0.5') ?>

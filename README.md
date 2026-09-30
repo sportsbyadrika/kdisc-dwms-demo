@@ -190,8 +190,8 @@ in production is refused locally too.
 
 ### Public
 - Home page with an admin-configurable hero panel, the **Skills / Jobs / Career
-  Services** cards and an **Assessment Test** band beneath them, live counts,
-  latest vacancies and a full footer.
+  Services** cards and a smaller **Assessment Test** card centred beneath them,
+  live counts, latest vacancies and a full footer.
 - Job search with a keyword bar and an e-commerce style facet panel (category,
   district, employment type, work mode, qualification, experience, salary).
   Facet counts reflect what a click actually returns.
